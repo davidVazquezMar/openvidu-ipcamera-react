@@ -20,14 +20,17 @@ function App() {
 
   useEffect(() => {
     const getToken = async () => {
-      const response = await fetch("https://localhost:4443/api/tokens", {
-        method: "POST",
-        headers: {
-          Authorization: "Basic " + btoa("OPENVIDUAPP:MY_SECRET"),
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ session: "sm400", role: "SUBSCRIBER" }),
-      });
+      const response = await fetch(
+        `https://${window.location.hostname}:4443/api/tokens`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Basic " + btoa("OPENVIDUAPP:MY_SECRET"),
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ session: "sm400", role: "SUBSCRIBER" }),
+        }
+      );
       const json = await response.json();
       setToken(json.token);
     };
