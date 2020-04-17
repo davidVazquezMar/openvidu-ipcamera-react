@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     const getToken = async () => {
       const response = await fetch(
-        `https://${window.location.hostname}:4443/api/tokens`,
+        `http://${window.location.hostname}:4443/api/tokens`,
         {
           method: "POST",
           headers: {
@@ -41,15 +41,20 @@ function App() {
     if (token) {
       console.log("token", token);
       const themSubscribers = [];
-      // console.log("got token");
-      // console.log("session", session);
       session.on("streamCreated", (e) => {
         const subscriber = session.subscribe(e.stream, undefined);
         themSubscribers.push(subscriber);
         setSubscribers(themSubscribers);
       });
-
-      session.connect(token);
+      session.processToken(token);
+      const wsUri = session.openvidu.getWsUri();
+      session.openvidu.wsUri = wsUri.replace("wss", "ws");
+      session.options = {
+        sessionId: session.sessionId,
+        participantId: token,
+        metadata: "",
+      };
+      session.connectAux(token);
     }
   }, [token]);
 
