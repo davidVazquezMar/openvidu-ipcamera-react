@@ -28,7 +28,7 @@ function App() {
             Authorization: "Basic " + btoa("OPENVIDUAPP:MY_SECRET"),
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ session: "user1", role: "PUBLISHER" }),
+          body: JSON.stringify({ session: "user1", role: "SUBSCRIBER" }),
         }
       );
       const json = await response.json();

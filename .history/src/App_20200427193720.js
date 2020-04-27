@@ -28,7 +28,7 @@ function App() {
             Authorization: "Basic " + btoa("OPENVIDUAPP:MY_SECRET"),
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ session: "user1", role: "PUBLISHER" }),
+          body: JSON.stringify({ session: "sm400", role: "SUBSCRIBER" }),
         }
       );
       const json = await response.json();
@@ -48,7 +48,7 @@ function App() {
       });
       session.processToken(token);
       const wsUri = session.openvidu.getWsUri();
-      // session.openvidu.wsUri = wsUri.replace("wss", "ws");
+      session.openvidu.wsUri = wsUri.replace("wss", "ws");
       session.options = {
         sessionId: session.sessionId,
         participantId: token,
